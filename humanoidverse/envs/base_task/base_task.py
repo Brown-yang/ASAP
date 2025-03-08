@@ -97,6 +97,9 @@ class BaseTask():
         actions = torch.zeros(self.num_envs, self.dim_actions, device=self.device, requires_grad=False)
         actor_state = {}
         actor_state["actions"] = actions
+
+        print("--------AAAAAAAAAAAAAAA-----------actor_state---------------",actor_state)
+
         obs_dict, _, _, _ = self.step(actor_state)
         return obs_dict
     

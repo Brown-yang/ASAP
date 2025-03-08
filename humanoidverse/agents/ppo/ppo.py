@@ -604,9 +604,21 @@ class PPO(BaseAlgo):
         step = 0
         self.eval_policy = self._get_inference_policy()
         obs_dict = self.env.reset_all()
+        print("---obs_dict-------:", obs_dict)
+        print("---obs_dict_actor shape-------:", obs_dict['actor_obs'].shape)   #1x380
+        print("---obs_dict_critic shape-------:", obs_dict['critic_obs'].shape)   #
+
         init_actions = torch.zeros(self.env.num_envs, self.num_act, device=self.device)
+        print("---init_action-------:", init_actions)
+        print("---init_action shape-------:", init_actions.shape) #1x23
+        print("--------num_act--------:",self.num_act)
+
+        #字典更新
         actor_state.update({"obs": obs_dict, "actions": init_actions})
+        #第一步进行更新状态，里面有obs
         actor_state = self._pre_eval_env_step(actor_state)
+        print("-----actor_status----:", actor_state)
+
         while True:
             actor_state["step"] = step
             actor_state = self._pre_eval_env_step(actor_state)

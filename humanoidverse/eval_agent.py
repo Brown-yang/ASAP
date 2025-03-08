@@ -102,7 +102,7 @@ def main(override_config: OmegaConf):
             config = OmegaConf.merge(config, eval_overrides)
         else:
             config = override_config
-            
+    
     simulator_type = config.simulator['_target_'].split('.')[-1]
     # print(config)
     # print("########################wywy")
@@ -149,6 +149,8 @@ def main(override_config: OmegaConf):
     ckpt_num = config.checkpoint.split('/')[-1].split('_')[-1].split('.')[0]
     config.env.config.save_rendering_dir = str(checkpoint.parent / "renderings" / f"ckpt_{ckpt_num}")
     config.env.config.ckpt_dir = str(checkpoint.parent) # commented out for now, might need it back to save motion
+
+    print("aaaa----------------------")
     env = instantiate(config.env, device=device)
 
     # Start a thread to listen for key press
@@ -161,8 +163,10 @@ def main(override_config: OmegaConf):
     algo.setup()
     algo.load(config.checkpoint)
 
+    print("WWWWWWWWWWWWWWW")
+
     print(config.checkpoint)   
-    print("aaaa")
+    print("7777777777777777777")
 
     EXPORT_POLICY = True
     EXPORT_ONNX = False
